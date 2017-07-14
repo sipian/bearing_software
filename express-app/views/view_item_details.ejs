@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.css">
+    <link rel="stylesheet" href="/bootstrap-3.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <title>View Item</title>
+</head>
+
+<body style="background-color:lavender;">
+
+    <!-- Navigation bar div begins -->
+    <div id="navigation"></div>
+    <!-- NAvigation bar div end -->
+
+    <div class="container-fluid" style="overflow:hidden;">
+        <pre style="background-color:lavenderblush;margin-top:10px;">
+
+        <h2 style="text-align:center;">
+          View Details of Items
+          <small>
+            Click On A Button And Enter The Details.
+          </small>
+        </h2>
+        <div class="" style="margin-top:-6%;">
+          <div class="btn-group btn-group-justified">
+          <a href="#" class="btn btn-danger btn-lg" id="viewBalanceOf1ItemButton">View Overbalance Balance of an Item</a>
+          <a href="#" class="btn btn-success btn-lg" id="viewDetailsOf1ItemButton">View Full Details of one item</a>
+     </div>
+           </div>
+
+    <div id="question" style="margin-top:-3.5%;"></div>
+    <div id="loader" style="display:none;">
+     <img src="images/loader.gif" alt="" style="width:12%;height:25%;"/>
+   </div>
+   <div class="result" id="result" style="margin-top:-100px;"></div>
+</pre>
+    </div>
+    <div class="" style="position: fixed; bottom: 0; width: 100%;">
+      <a id="minusBtn"   onclick="minus()" style="position:fixed;bottom:40px;cursor:pointer;"><span class="glyphicon glyphicon-zoom-out" ></span></a>
+      <a id="plusBtn"   onclick="plus()" style="position:fixed;bottom:0;cursor:pointer;"><span class="glyphicon glyphicon-zoom-in"></span></a>
+    </div>
+</body>
+<script src="/javascript/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/common.js"></script>
+<script src="/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<script src="/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
+<script src="/javascript/JavascriptForViewItemDetails.js"></script>
+<script>
+    var currFFZoom = 1;
+    var currIEZoom = 100;
+
+    function plus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom += step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom += stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+
+    };
+
+    function minus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom -= step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom -= stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+    };
+
+</script>
+
+</html>

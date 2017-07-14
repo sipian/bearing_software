@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.css">
+    <link rel="stylesheet" href="/bootstrap-3.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <title>Edit Item Details</title>
+    <style media="screen">
+        span {
+            color: red;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+
+<body style="background-color:lavender;">
+
+    <!-- Navigation bar div begins -->
+    <div id="navigation"></div>
+    <!-- NAvigation bar div end -->
+
+    <div class="container-fluid" style="overflow:hidden;">
+        <pre style="background-color:lavenderblush;margin-top:50px;">
+<a href="/edit_entry_success"  class="btn btn-success btn-lg btn-block">
+            Go Back
+            </a>    <div id="question" style="margin-top:-7%;" >
+      <div class="container">
+                 <div class="form-group">
+                 <label class="control-label" for="usr1"> <h3>Present Item Name:</h3></label>
+                     <input type="text" class="form-control item_name" id="usr1" name="name"  required>
+                     <span class="error1" ></span>
+                    </div>
+                <button type="button" name="button" id= "oldNameSubmit" class="btn btn-primary btn-lg btn-block" style="margin-top:-5%;">Submit</button>
+                <div class="btn-group btn-group-justified" style="display:none;" id="editNameBlock">
+                     <a href="#" class="btn btn-primary" id="newNameButton">New Item Name</a>
+                     <a href="#" class="btn btn-warning" id="newGroupButton">New Item Group</a>
+                     <a href="#" class="btn btn-danger"  id="newUnitButton">New Item Unit</a>
+                </div>
+      </div>
+    </div>
+    <div class="resultdoob" id="resultdoob" style="margin-top:-7%;"></div>
+
+    <div id="question1" ></div>
+
+  <div class="result" id="result" style="margin-top:-120px;"></div>
+  <div id="loader" style="display:none;">
+   <img src="images/loader.gif" alt="" style="width:12%;height:25%;"/>
+ </div>
+</pre>
+    </div>
+
+<div class="" style="position: fixed; bottom: 0; width: 100%;">
+  <a id="minusBtn"   onclick="minus()" style="position:fixed;bottom:40px;cursor:pointer;"><span class="glyphicon glyphicon-zoom-out" ></span></a>
+  <a id="plusBtn"   onclick="plus()" style="position:fixed;bottom:0;cursor:pointer;"><span class="glyphicon glyphicon-zoom-in">
+    
+  </span></a>
+</div>
+</body>
+<script type="text/javascript" src="/javascript/common.js"></script>
+<script src="/javascript/jquery.min.js"></script>
+<script src="/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<script src="/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
+<script src="/javascript/JavascriptForEditEntryName.js"></script>
+
+<script>
+    var currFFZoom = 1;
+    var currIEZoom = 100;
+
+    function plus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom += step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom += stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+
+    };
+
+    function minus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom -= step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom -= stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+    };
+
+</script>
+
+</html>

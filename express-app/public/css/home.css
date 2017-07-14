@@ -1,0 +1,97 @@
+
+/**
+ * CSSReset.com - How To Keep Footer At Bottom of Page with CSS
+ *
+ * Original Tutorial: http://www.cssreset.com/2010/css-tutorials/how-to-keep-footer-at-bottom-of-page-with-css/
+ * License: Free - do whatever you like with it! Credit and linkbacks much appreciated.
+ *
+ *  Make sure the value for 'padding-bottom' on #content is equal to or greater than the height of #footer.
+ */
+
+ html, body {
+ height: 100%;
+ }
+ body{
+                 background-image:url('/images/backgroundImage2.jpg');
+                 background-size:cover;
+                 background-repeat:repeat;
+              }
+
+  #cmpname{
+    text-decoration: none;
+    font-family: impact;
+    color: black;
+    font-weight: bold;
+    font-size: 29px;
+  }
+ .wrapper {
+ min-height: 100%;
+ height: auto !important;
+ height: 100%;
+ margin: 0 auto -20px;
+
+ }
+ .header {
+	background:#ededed;
+  height:0px;
+}
+ .footer, .push {
+   background-color:  #ededed;
+   clear: both;
+ height: 20px;
+ margin-top: 6px;
+  }
+  .footer p{
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+    display: inline;
+   }
+  #footerhome{
+    padding-left: 0;
+  }
+
+ .carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+    width:250px;
+    height: 250px;
+      margin:auto;
+ }
+ .nav.navbar-nav li a {
+    color: black;
+}
+fieldset {
+    overflow: hidden;
+    margin-bottom: 5px;
+    display: inline-block;
+    width: 270px;
+}
+
+label { float: left; width: 120px; }
+
+input { width: 200px; }
+.nav.navbar-nav li a:hover {
+   color: black;
+   background-color: gray;
+}
+
+.nav.navbar-nav li a:visited {
+   color: black;
+}
+ li > a{
+   color:black;font-weight: bold;
+  }
+ //.navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+ //.navbar {min-height:32px !important}
+ .navbar navbar-inverse {
+  background-color: #000; /* background color will be black for all browsers */
+  background-image: none;
+  background-repeat: no-repeat;
+  filter: none;
+}
+ //.navbar-collapse { padding: 2px; } /* forces the nav to take full container with */
+ //.navbar-nav > li > a { text-transform: uppercase; }
+ //.navbar-nav > li:first-child { text-align: left; } /* alligns first element to the left border */
+ //.navbar-nav > li:last-child { text-align: right; } /* similar for right border */
+ //.navbar-nav > li:first-child > a, .navbar-nav > li:last-child > a { padding: 2px; }
+ //.navbar-nav { display: table; width: 90%; margin: 0; }
+ //.navbar-nav > li { display: table-cell; text-align: center; float: none; }

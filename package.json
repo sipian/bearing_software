@@ -1,0 +1,22 @@
+{
+  "name": "store",
+  "description": "Store software for BSIL",
+  "version": "0.1.0",
+  "main": "main.js",
+  "authors": [
+    "Harsh Agarwal <harshaga97@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": ".\\node.exe start-electron.js"
+  },
+  "dependencies": {
+    "electron": "^1.4.13",
+    "jquery": "^3.1.1",
+    "keymaster": "^1.6.2",
+    "lodash": "^4.17.3",
+    "request": "^2.75.0",
+    "strip": "^3.0.0"
+  }
+}

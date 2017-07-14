@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.css">
+    <link rel="stylesheet" href="/bootstrap-3.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <title>Reports</title>
+</head>
+
+<body style="background-color:lavender;">
+
+    <!-- Navigation bar div begins -->
+    <div id="navigation"></div>
+    <!-- NAvigation bar div end -->
+
+
+    <pre style="background-color:lavenderblush">
+ <div class="btn-group btn-group-justified"  id="editEntryblock" style="margin-top:5%;">
+      <a href="#" class="btn btn-primary btn-sm" id="getFullReport">Get Full Reports (Max 3 months)</a>
+      <a href="#" class="btn btn-warning btn-sm" id="specificGroup" style="color:black;">Get Full Reports (Max 3 months) For A Specific Group</a>
+      <a href="#" class="btn btn-success btn-sm" id="specificName" style="color:black;">Get Full Reports (Max 3 months) For An Item</a>
+      <a href="#" class="btn btn-danger btn-sm" id="listSpan">List of Items Issued & Received in A Time Span</a>
+ </div>
+ <br>
+
+
+   <div id="question" style="margin-top:-8%;"></div>
+   <div id="errorMessages" style="margin-top:-10%;"></div>
+  <div class="result" id="result" style="margin-left:-7px;"></div>
+
+
+ <br><br><br>
+
+
+</pre>
+    <div id="loader" style="display:none;">
+        <img src="images/loader.gif" alt="" style="width:12%;height:25%;" />
+    </div>
+<div class="" style="position: fixed; bottom: 0; width: 100%;">
+  <a id="minusBtn"   onclick="minus()" style="position:fixed;bottom:40px;cursor:pointer;"><span class="glyphicon glyphicon-zoom-out" ></span></a>
+  <a id="plusBtn"   onclick="plus()" style="position:fixed;bottom:0;cursor:pointer;"><span class="glyphicon glyphicon-zoom-in"></span></a>
+</div>
+</body>
+<script type="text/javascript" src="/javascript/common.js"></script>
+<script src="/javascript/jquery.min.js"></script>
+<script src="/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<script src="/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
+<script src="/javascript/JavascriptForReports.js"></script>
+<script>
+    var currFFZoom = 1;
+    var currIEZoom = 100;
+
+    function plus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom += step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom += stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+
+    };
+
+    function minus() {
+        //alert('sad');
+        var step = 15;
+        currFFZoom -= step;
+        $('body')
+            .css('MozTransform', 'scale(' + currFFZoom + ')');
+        var stepie = 15;
+        currIEZoom -= stepie;
+        $('body')
+            .css('zoom', ' ' + currIEZoom + '%');
+    };
+</script>
+</html>

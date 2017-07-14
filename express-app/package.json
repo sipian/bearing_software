@@ -1,0 +1,19 @@
+{
+  "name": "store",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "authors": [
+    "Harsh Agarwal <harshaga97@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "date-and-time": "^0.4.0",
+    "ejs": "^2.5.6",
+    "express": "~4.14.0",
+    "morgan": "~1.7.0",
+    "nedb": "^1.8.0"
+  }
+}
