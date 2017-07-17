@@ -23,6 +23,9 @@ router.get('/addNewMachine', function (req, res, next) {
 });
 
 router.post('/addNewMachine', function (req, res, next) {
+    if(!req.body.m_no)
+      res.redirect('/machineSection');
+    else {
     db.machine.insert({
         m_no: req.body.m_no,
         bearing: [],
@@ -40,6 +43,7 @@ router.post('/addNewMachine', function (req, res, next) {
           });
         }
     });
+  }
 });
 
 //middlewares to add  machine bearing entry

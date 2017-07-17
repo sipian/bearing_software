@@ -37,7 +37,7 @@ db.workroll = new Datastore({
                 console.log("Successfully opened Database workroll.txt");
                 // Using a sparse unique index
                 db.workroll.ensureIndex({
-                    fieldName: 'roll_no',
+                    fieldName: 'roll',
                     unique: true,
                     sparse: true
                 }, function(err) {

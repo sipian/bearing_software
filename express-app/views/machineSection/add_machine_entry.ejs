@@ -58,16 +58,7 @@
             </form>
          </div>
       </div>
-      <div class="container">
-         <div class="" style="position: fixed; width: 100%;">
-            <a id="minusBtn" onclick="minus()" style="position:fixed;bottom:40px;cursor:pointer;">
-              <span class="glyphicon glyphicon-zoom-out" ></span>
-            </a>
-            <a id="plusBtn" onclick="plus()" style="position:fixed;bottom:0;cursor:pointer;">
-              <span class="glyphicon glyphicon-zoom-in"></span>
-            </a>
-         </div>
-      </div>
+      <div class="container" id="zoomFeatures"></div>
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
@@ -88,40 +79,7 @@
           $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#make").val($("#make").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
-
-          checkIfMachineExists($("#m_no").val())
-          .done(function(result, status, xhr) {
-            if (result === "error") {
-              $("#message").html(`
-                <div class="alert alert-danger alert-dismissable fade in">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <strong>ERROR!</strong> Some error occured while fetching the data.<br>Reload The Page And Try Again.
-                </div>`);
-                e.preventDefault();
-            } else  if (result === "multiple") {
-                $("#message").html(`
-                  <div class="alert alert-danger alert-dismissable fade in">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>ERROR!</strong> Multiple Entries With The Same Machine Name Exist
-                  </div>`);
-                  e.preventDefault();
-              } else if (result === "doesNotexist") {
-                $("#message").html(`
-                  <div class="alert alert-danger alert-dismissable fade in">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>ERROR!</strong> Machine With The Given Name Does Not Exist
-                  </div>`);
-                  e.preventDefault();
-              }
-            })
-          .fail(function(x) {
-            $("#message").html(`
-              <div class="alert alert-danger alert-dismissable fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <strong>ERROR!</strong> Some error occured while fetching the data.<br>Reload The Page And Try Again.
-              </div>`);
-              e.preventDefault();
-          });
+          checkIfMachineExists($("#m_no").val(), e, false);
         });
       });
    </script>

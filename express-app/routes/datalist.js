@@ -3,6 +3,9 @@ const express = require('express'),
 
 var db = require("./db.js");
 
+/* ************************************ */
+/* MACHINE'S DATALIST */
+
 // get autocomplete array containing all the machine names
 router.get('/machine_no', function(req, res, next) {
     db.machine.find({
@@ -43,6 +46,73 @@ router.get('/make', function(req, res, next) {
     });
 });
 
+
+/* ************************************ */
+/* WORK ROLL'S DATALIST */
+
+// get autocomplete array containing all the new workroll names
+router.get('/roll', function(req, res, next) {
+    db.workroll.find({
+      status : "new"
+    }).projection({ roll: 1 }).exec(function(err, docs) {
+        if (err) {
+            console.log("Datalist For roll Error " + err);
+            res.send("error");
+        } else {
+            var datalistData = [],
+                len = docs.length;
+
+            for (var i = 0; i < len; ++i) {
+                datalistData.push(docs[i].roll);
+            }
+            res.send(datalistData);
+        }
+    });
+});
+
+// get autocomplete array containing all the workrolls reason
+router.get('/reason', function(req, res, next) {
+    db.workroll.find({
+      status : "new"
+    }).projection({ "field.reason": 1 }).exec(function(err, docs) {
+        if (err) {
+            console.log("Datalist For reason Error " + err);
+            res.send("error");
+        } else {
+            var datalistData = [],
+                len = docs.length;
+
+            for (var i = 0; i < len; ++i) {
+                datalistData.push(docs[i].field.reason);
+            }
+            res.send(datalistData);
+        }
+    });
+});
+
+// get autocomplete array containing all the workrolls operator names
+router.get('/operator', function(req, res, next) {
+    db.workroll.find({
+      status : "new"
+    }).projection({ "field.operator": 1 }).exec(function(err, docs) {
+        if (err) {
+            console.log("Datalist For operator Error " + err);
+            res.send("error");
+        } else {
+            var datalistData = [],
+                len = docs.length;
+
+            for (var i = 0; i < len; ++i) {
+                datalistData.push(docs[i].field.operator);
+            }
+            res.send(datalistData);
+        }
+    });
+});
+
+/* ************************************ */
+/* MACHINE'S CHECKING FUNCTIONS */
+
 // check if a machine with a name exists
 router.get('/checkIfMachineExists', function (req, res, next) {
     db.machine.find({
@@ -63,11 +133,14 @@ router.get('/checkIfMachineExists', function (req, res, next) {
     });
 });
 
+/* ************************************ */
+/* WORKROLL'S CHECKING FUNCTIONS */
+
 // check if a work roll with a name exists
 router.get('/checkIfWorkRollExists', function (req, res, next) {
   db.workroll.find({
-      roll_no: req.query.data
-  }).projection({ roll_no: 1 }).exec(function (err, docs) {
+      roll: req.query.data,
+  }).projection({ status: 1 }).exec(function (err, docs) {
       if (err) {
           console.log("Error happened while /checkIfWorkRollExists : " + err);
           res.send("error");
@@ -75,7 +148,10 @@ router.get('/checkIfWorkRollExists', function (req, res, next) {
           if (docs.length > 1) {
               res.send("multiple");
           } else if (docs.length === 1) {
-              res.send("exists");
+                if(docs[0].status === "new")
+                    res.send("exists");
+                else
+                    res.send("old");
           } else {
               res.send("doesNotexist");
           }

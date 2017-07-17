@@ -7,17 +7,17 @@
       <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
       <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.min.css">
       <link rel="stylesheet" href="/css/common.css">
-      <title>View Bearing Details</title>
+      <title>View Back Up Roll Details</title>
    </head>
    <body style="background-color:lavender;">
       <div id="navigation"></div>
       <br><br>
       <div class="container">
          <div class="page-header">
-            <h1>View Bearing Details </h1>
+            <h1>View Back Up Roll Details </h1>
          </div>
          <div class="container">
-            <form class="form-horizontal" method="POST" action="/machineSection/viewMachineBearing" id="form">
+            <form class="form-horizontal" method="POST" action="/machineSection/viewMachineBackUpRoll" id="form">
                <div class="form-group has-success has-feedback">
                   <label class="col-sm-2 control-label" for="machineName">Machine Name</label>
                   <div class="col-sm-10">
@@ -54,7 +54,16 @@
       </div>
       <span id="message"><%- message %></span>
 
-      <div class="container" id="zoomFeatures"></div>
+      <div class="container">
+         <div class="" style="position: fixed; left :1%; width: 100%;">
+            <a id="minusBtn" onclick="minus()" style="position:fixed;bottom:40px;cursor:pointer;">
+              <span class="glyphicon glyphicon-zoom-out" ></span>
+            </a>
+            <a id="plusBtn" onclick="plus()" style="position:fixed;bottom:0;cursor:pointer;">
+              <span class="glyphicon glyphicon-zoom-in"></span>
+            </a>
+         </div>
+      </div>
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
@@ -68,7 +77,40 @@
 
         $("#form").submit(function(e) {
           $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
-          checkIfMachineExists($("#m_no").val(), e, false);
+
+          checkIfMachineExists($("#m_no").val())
+          .done(function(result, status, xhr) {
+            if (result === "error") {
+              $("#message").html(`
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>ERROR!</strong> Some error occured while fetching the data.<br>Reload The Page And Try Again.
+                </div>`);
+                e.preventDefault();
+            } else  if (result === "multiple") {
+                $("#message").html(`
+                  <div class="alert alert-danger alert-dismissable fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>ERROR!</strong> Multiple Entries With The Same Machine Name Exist
+                  </div>`);
+                  e.preventDefault();
+              } else if (result === "doesNotexist") {
+                $("#message").html(`
+                  <div class="alert alert-danger alert-dismissable fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>ERROR!</strong> Machine With The Given Name Already Exists
+                  </div>`);
+                  e.preventDefault();
+              }
+            })
+          .fail(function(x) {
+            $("#message").html(`
+              <div class="alert alert-danger alert-dismissable fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>ERROR!</strong> Some error occured while fetching the data.<br>Reload The Page And Try Again.
+              </div>`);
+              e.preventDefault();
+          });
         });
       });
    </script>
