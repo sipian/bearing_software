@@ -4,8 +4,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       routes = require('./routes/index'),
       datalist = require('./routes/datalist'),
-      stockHandler = require('./routes/stockHandler'),
-      viewDetails = require('./routes/viewDetails'),
+      machineSection = require('./routes/machineSection'),
+      workrollSection = require('./routes/workrollSection'),
       app = express();
 
 //view engine setup
@@ -21,8 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/datalist', datalist);
-app.use('/stockHandler', stockHandler);
-app.use('/viewDetails',viewDetails);
+app.use('/machineSection',machineSection);
+app.use('/workrollSection',workrollSection);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

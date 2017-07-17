@@ -2,7 +2,7 @@
   "name": "store",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "authors": [
     "Harsh Agarwal <harshaga97@gmail.com>"
@@ -15,5 +15,9 @@
     "express": "~4.14.0",
     "morgan": "~1.7.0",
     "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.2.0",
+    "eslint-config-google": "^0.9.1"
   }
 }
