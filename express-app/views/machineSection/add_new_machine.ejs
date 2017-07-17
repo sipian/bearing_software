@@ -51,13 +51,14 @@
       </div>
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
-   <script type="text/javascript" src="/javascript/machineSection/common.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
+   <script type="text/javascript" src="/javascript/machineSection/common.js"></script>
    <script type="text/javascript" src="/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
    <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
    <script>
       $(function() {
         dataListForMachineName();
+        $("#add_new_machine").attr("class", "active");
 
         $("input").focus(function() {
           $("#message").html("");

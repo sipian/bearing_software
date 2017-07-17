@@ -1,12 +1,5 @@
 
 module.exports = {
-	checkDate : function(date, startingDate, endingDate) {
-    let dateFunction = date1.parse(date, 'DD-MM-YYYY');
-    let sdFunction = date1.parse(startingDate, 'DD-MM-YYYY');
-    let edFunction = date1.parse(endingDate, 'DD-MM-YYYY');
-    if (dateFunction >= sdFunction && dateFunction <= edFunction) return true;
-    else return false;
-	},
   getMachineTypeName : function(type) {
     switch(type) {
       case 'gui' : return 'Gear Side > Upper > In ';
@@ -45,11 +38,5 @@ module.exports = {
 		var years = parseInt(difdt.toISOString().slice(0, 4) - 1970);
 		var months = parseInt(difdt.getMonth()) + years*12;
 		return (months.toString() + "M " + difdt.getDate() + "D");
-
-    // var months;
-    // months = (d_new.getFullYear() - d_old.getFullYear()) * 12;
-    // months -= d_old.getMonth() + 1;
-    // months += d_new.getMonth();
-    // return months <= 0 ? 0 : months;
 	}
 };

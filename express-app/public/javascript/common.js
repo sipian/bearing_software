@@ -4,6 +4,10 @@ function flatten(arr) {
   }, []);
 }
 
+function printPage() {
+    window.print();
+}
+
 function remove_duplicates_es6(arr) {
     let s = new Set(arr);
     let it = s.values();
