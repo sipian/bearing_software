@@ -67,10 +67,13 @@ function dataListForMachineMake() {
 /* ************************************ */
 /* WORKROLL'S DATALIST */
 
-function dataListForWorkRollName() {
+function dataListForWorkRollName(st) {
     $.ajax({
         type: "GET",
         url: "/datalist/roll",
+        data: {
+          status : st
+        },
         success: function (result, status, xhr) {
             if (result === "error") {
               alert("Some Error Occured While Fetching The Data.\nReloading The Page And Trying It Again");
@@ -136,6 +139,9 @@ function dataListForWorkRollOperator() {
     });
 }
 
+/* ****************************** */
+/* CHECKING DATA EXISTENCE FUNCTIONS */
+
 function checkIfMachineExists(inputCheck, e , giveErrorOnExists) {
     $.ajax({
         type: "GET",
@@ -169,7 +175,7 @@ function checkIfMachineExists(inputCheck, e , giveErrorOnExists) {
     });
 }
 
-function checkIfWorkRollExists(inputCheck, e , giveErrorOnExists) {
+function checkIfWorkRollExists(inputCheck, e , giveErrorOnExists, st = "both") {
     $.ajax({
         type: "GET",
         url: "/datalist/checkIfWorkRollExists",
@@ -185,20 +191,20 @@ function checkIfWorkRollExists(inputCheck, e , giveErrorOnExists) {
           $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Multiple Entries With The Same Work Roll Name Exist</div>`);
             e.preventDefault();
         } else if (giveErrorOnExists) {
-            if(result === "exists") {
+            if(result !== "doesNotexist") {
               $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Already Exists</div>`);
               e.preventDefault();
-              } else if(result === "old") {
-                $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Exists As An Old Roll</div>`);
-                e.preventDefault();
-              }
+            }
         } else {
             if(result === "doesNotexist") {
               $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Does Not Exist</div>`);
               e.preventDefault();
-            } else if(result === "old") {
-              $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Exists As An Old Roll</div>`);
-              e.preventDefault();
+            } else if(st === "old" && result === "exists") {
+                $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Exists As A New Roll</div>`);
+                e.preventDefault();
+            } else if(st === "new" && result === "old") {
+                $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Work Roll With The Given Name Exists As An Old Roll</div>`);
+                e.preventDefault();
             }
           }
       })

@@ -52,9 +52,10 @@ router.get('/make', function(req, res, next) {
 
 // get autocomplete array containing all the new workroll names
 router.get('/roll', function(req, res, next) {
-    db.workroll.find({
-      status : "new"
-    }).projection({ roll: 1 }).exec(function(err, docs) {
+    var jsonFind = {};
+    if(req.query.status !== "both")
+      jsonFind.status = req.query.status;
+    db.workroll.find(jsonFind).projection({ roll: 1 }).exec(function(err, docs) {
         if (err) {
             console.log("Datalist For roll Error " + err);
             res.send("error");
@@ -73,7 +74,7 @@ router.get('/roll', function(req, res, next) {
 // get autocomplete array containing all the workrolls reason
 router.get('/reason', function(req, res, next) {
     db.workroll.find({
-      status : "new"
+
     }).projection({ "field.reason": 1 }).exec(function(err, docs) {
         if (err) {
             console.log("Datalist For reason Error " + err);
@@ -93,7 +94,7 @@ router.get('/reason', function(req, res, next) {
 // get autocomplete array containing all the workrolls operator names
 router.get('/operator', function(req, res, next) {
     db.workroll.find({
-      status : "new"
+
     }).projection({ "field.operator": 1 }).exec(function(err, docs) {
         if (err) {
             console.log("Datalist For operator Error " + err);
@@ -139,7 +140,7 @@ router.get('/checkIfMachineExists', function (req, res, next) {
 // check if a work roll with a name exists
 router.get('/checkIfWorkRollExists', function (req, res, next) {
   db.workroll.find({
-      roll: req.query.data,
+    roll: req.query.data
   }).projection({ status: 1 }).exec(function (err, docs) {
       if (err) {
           console.log("Error happened while /checkIfWorkRollExists : " + err);

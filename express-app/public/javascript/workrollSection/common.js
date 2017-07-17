@@ -14,15 +14,30 @@ document.getElementById("navigation")
       <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
             <li id="add_new_roll">
-               <a href="/workrollSection/addNewWorkRoll">Add New Work Roll</a>
+               <a href="/workrollSection/addNewWorkRoll">Add New Roll</a>
             </li>
             <li id="add_new_roll_entry">
-               <a href="/workrollSection/addWorkRollEntry">Add New Work Entry</a>
+               <a href="/workrollSection/addWorkRollEntry">Add New Roll Entry</a>
             </li>
-            <li id="make_roll_old">
-               <a href="/workrollSection/makeRollOld">Make Work Roll Old</a>
+            <li id="view_work_roll">
+               <a href="/workrollSection/viewWorkRoll">View Roll Details</a>
             </li>
-            <!-- Update Entries -->
+            <li  id="change_roll_status">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Roll Status<b class="caret"></b></a>
+               <ul class="dropdown-menu">
+                <li class="dropdown-submenu">
+                  <li>
+                     <a href="/workrollSection/changeRollStatus?status=old">Make New Roll Old</a>
+                  </li>
+                  <li>
+                     <a href="/workrollSection/changeRollStatus?status=new">Make Old Roll New</a>
+                  </li>
+                  </li>
+               </ul>
+            </li>
+            <li id="view_old_roll">
+               <a href="/workrollSection/viewOldWorkRoll">View Old Rolls</a>
+            </li>
             <li>
                <a href="/machineSection/updateMachineBearingEntry">Update Entry</a>
             </li>
@@ -30,7 +45,7 @@ document.getElementById("navigation")
               <a href="#" onclick="printPage()">Print</a>
             </li>
          </ul>
-         <p class="navbar-text" style="color:blue;">Work Roll Section</p>
+         <p class="navbar-text" style="color:blue;">Roll Section</p>
       </div>
    </div>
 </div>`;

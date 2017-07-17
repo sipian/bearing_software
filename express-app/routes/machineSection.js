@@ -63,9 +63,10 @@ router.get('/addMachineBearingEntry', function (req, res, next) {
 });
 
 router.post('/addMachineBearingEntry', function(req, res, next) {
-  if(!req.body.date || !req.body.type || !req.body.m_no || !req.body.make || !req.body.comment)
+  if(!req.body.date || !req.body.type || !req.body.m_no || !req.body.make)
     res.redirect('/machineSection');
   else {
+    req.body.comment = (req.body.comment)? req.body.comment:'';
     var date = new Date(req.body.date),
         doc_response = {
         type: req.body.type,
@@ -318,9 +319,10 @@ router.get('/addMachineBackUpRollEntry', function (req, res, next) {
 });
 
 router.post('/addMachineBackUpRollEntry', function(req, res, next) {
-  if(!req.body.date || !req.body.type ||  !req.body.dia || !req.body.m_no || !req.body.comment)
+  if(!req.body.date || !req.body.type ||  !req.body.dia || !req.body.m_no)
     res.redirect('/machineSection');
   else {
+    req.body.comment = (req.body.comment)? req.body.comment:'';
     var date = new Date(req.body.date),
         doc_response = {
           type: req.body.type,

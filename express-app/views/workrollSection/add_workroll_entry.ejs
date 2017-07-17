@@ -107,7 +107,7 @@
    <script>
       $(function() {
         dataListForMachineName();
-        dataListForWorkRollName();
+        dataListForWorkRollName("new");
         dataListForWorkRollReason();
         dataListForWorkRollOperator();
 
@@ -126,7 +126,7 @@
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
 
           checkIfMachineExists($("#m_no").val(), e, false);
-          checkIfWorkRollExists($("#roll").val(), e, false);
+          checkIfWorkRollExists($("#roll").val(), e, false, "new");
 
         });
       });

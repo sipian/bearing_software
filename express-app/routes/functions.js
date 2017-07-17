@@ -25,6 +25,17 @@ module.exports = {
 
 		return `${day}/${month}/${year}`;
 	},
+  formattedTime: function (d = new Date()) {
+  	let hour = String(d.getHours());
+  	let minutes = String(d.getMinutes());
+
+  	if (hour.length < 2)
+			hour = '0' + hour;
+  	if (minutes.length < 2)
+			minutes = '0' + minutes;
+
+		return `${hour}:${minutes}`;
+	},
 	isEmptyObject: function(obj) {
   	for (var key in obj) {
     	if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -38,5 +49,11 @@ module.exports = {
 		var years = parseInt(difdt.toISOString().slice(0, 4) - 1970);
 		var months = parseInt(difdt.getMonth()) + years*12;
 		return (months.toString() + "M " + difdt.getDate() + "D");
-	}
+	},
+	timeDiff: function(d_new, d_old) {
+		var difMs = d_new - d_old;
+    var diffHrs = Math.floor(difMs / 3600000); // hours
+    var diffMins = Math.round((difMs % 3600000) / 60000); // minutes
+		return (diffHrs.toString() + "H " + diffMins.toString() + "M");
+  }
 };
