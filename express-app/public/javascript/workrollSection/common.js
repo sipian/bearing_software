@@ -39,9 +39,6 @@ document.getElementById("navigation")
                <a href="/workrollSection/viewOldWorkRoll">View Old Rolls</a>
             </li>
             <li>
-               <a href="/machineSection/updateMachineBearingEntry">Update Entry</a>
-            </li>
-            <li>
               <a href="#" onclick="printPage()">Print</a>
             </li>
          </ul>

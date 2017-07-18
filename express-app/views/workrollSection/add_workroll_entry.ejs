@@ -124,7 +124,8 @@
           $("#dia").val($("#dia").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#operator").val($("#operator").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
-
+          if(!$("#comment").val())
+            $("#comment").val(' ');
           checkIfMachineExists($("#m_no").val(), e, false);
           checkIfWorkRollExists($("#roll").val(), e, false, "new");
 

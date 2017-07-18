@@ -6,11 +6,18 @@ const express = require('express'),
       datalist = require('./routes/datalist'),
       machineSection = require('./routes/machineSection'),
       workrollSection = require('./routes/workrollSection'),
+      updateEntry = require('./routes/updateEntry'),
+      session = require('express-session'),
       app = express();
 
 //view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(session({
+    secret: '8ub1XHePSSx3RS2mOKv6',
+    resave : false,
+    saveUninitialized: false
+}));
 
 //uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -23,6 +30,7 @@ app.use('/', routes);
 app.use('/datalist', datalist);
 app.use('/machineSection',machineSection);
 app.use('/workrollSection',workrollSection);
+app.use('/updateEntry',updateEntry);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -78,6 +78,8 @@
           $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#dia").val($("#dia").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          if(!$("#comment").val())
+            $("#comment").val(' ');
           checkIfMachineExists($("#m_no").val(), e, false);
         });
       });

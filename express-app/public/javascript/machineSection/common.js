@@ -95,10 +95,6 @@ document.getElementById("navigation")
                   </li>
                </ul>
             </li>
-            <!-- Update Entries -->
-            <li>
-               <a href="/machineSection/updateMachineBearingEntry">Update Entry</a>
-            </li>
             <li>
               <a href="#" onclick="printPage()">Print</a>
             </li>

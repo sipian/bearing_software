@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="BSIL Bearing Software">
+      <meta name="author" content="Harsh Agarwal">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/common.css">
+      <title>BSIL Update Login</title>
+   </head>
+   <body style="background-image:url('/images/light-blue-ornamental-background_1268-916.jpg');background-repeat: no-repeat;background-size: cover;">
+     <nav class="navbar navbar-inverse">
+       <div class="container-fluid">
+         <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" href="/">BSIL BEARING & ROLLS</a>
+         </div>
+         <div class="collapse navbar-collapse" id="myNavbar">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/">Home</a></li>
+             <li><a href="/machineSection">Machine Section</a></li>
+             <li><a href="/workrollSection">Workroll Section</a></li>
+             <li><a href="/updateEntry">Update Entry</a></li>
+           </ul>
+         </div>
+       </div>
+     </nav>
+
+     <div class="container">
+        <form class="form-horizontal" method="POST" action="/updateEntry/checkPassword" id="form">
+           <div class="form-group has-success has-feedback">
+              <label class="col-sm-2 control-label" for="roll">Enter Password</label>
+              <div class="col-sm-10">
+                 <input class="form-control" name="password" type="password" form="form" required>
+              </div>
+           </div>
+           <div class="form-group">
+              <label class="col-sm-2 control-label"></label>
+              <div class="col-sm-5">
+                 <input class="btn btn-danger btn-lg" type="submit" >
+              </div>
+           </div>
+           <div class="form-group">
+              <label class="col-sm-2 control-label"></label>
+              <div class="col-sm-8">
+                <span id="message">
+                  <%- message %>
+                </span>
+              </div>
+           </div>
+        </form>
+     </div>
+   </body>
+   <script type="text/javascript" src="/javascript/jquery.min.js"></script>
+   <script  type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+</html>

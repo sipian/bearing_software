@@ -247,3 +247,6 @@ document.getElementById("zoomFeatures")
      <span class="glyphicon glyphicon-zoom-in"></span>
    </a>
 </div>`;
+$(function() {
+  $("[rel=tooltip]").tooltip();
+});
