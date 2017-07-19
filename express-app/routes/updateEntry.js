@@ -263,7 +263,63 @@ router.post('/updateExistingEntry', function (req, res, next) {
   }
 });
 
+router.get('/updateBackUpRollEntry', function (req, res, next) {
+    if(!req.session.loggedin)
+      res.redirect('/updateEntry');
+    else {
+      if(!req.query.index || !req.query.type || !req.query.name || !req.query.type || !req.query.date || !req.query.dia || !req.query.comment)
+        res.redirect('/updateEntry/home');
+      else {
+        res.render('updateEntry/update_backup_entry', {
+              heading : (req.query.type === "roll")?"Work Roll" : "Machine",
+              type : req.query.type,
+              name : req.query.name,
+              error : "",
+            });
+        }
+    }
+});
 
+router.post('/updateBackUpRollEntry', function (req, res, next) {
+    if(!req.session.loggedin)
+      res.redirect('/updateEntry');
+    else {
+      if(!req.body.newname || !req.body.type ||!req.body.oldname)
+        res.redirect('/updateEntry/home');
+      else {
+          var doc_response = {
+                heading : (req.body.type === "roll")?"Work Roll" : "Machine",
+                type : req.body.type,
+                name : req.body.newname,
+                error : "",
+              };
+        if(req.body.type === "m_no") {
+          db.machine.update({ m_no: req.body.oldname },
+                    { $set: { m_no: req.body.newname } }, { multi: false, upsert: false }, function (err, numAffected, affectedDocuments, upsert) {
+
+                if(err || numAffected==0) {
+                    doc_response.error = `<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>ERROR! </strong>${(err)?(err.message):('The Machine Does Not Exist')}</div>`;
+                    res.render('updateEntry/update_individual_name', doc_response);
+                } else {
+                  res.redirect(`/updateEntry/updateName?type=${req.body.type}&name=${req.body.newname}&message=SUCCESS!%20%3C/strong%3EModified%20Successfully`);
+                }
+          });
+        } else if(req.body.type === "roll") {
+          db.workroll.update({ roll: req.body.oldname },
+                    { $set: { roll: req.body.newname } }, { multi: false, upsert: false }, function (err, numAffected, affectedDocuments, upsert) {
+
+                if(err || numAffected==0) {
+                  doc_response.error = `<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>ERROR! </strong>${(err)?(err.message):('The Work Roll Does Not Exist')}</div>`;
+                    res.render('updateEntry/update_individual_name', doc_response);
+                } else {
+                  res.redirect(`/updateEntry/updateName?type=${req.body.type}&name=${req.body.newname}&message=SUCCESS!%20%3C/strong%3EModified%20Successfully`);
+                }
+          });
+          } else
+             res.redirect('/updateEntry/home');
+        }
+    }
+});
 
 /* *************************************** */
 /* DELETE ENTRY OF MACHINES/WORKROLLS */
@@ -307,6 +363,77 @@ router.post('/deleteExistingEntry', function (req, res, next) {
       else
         utilityUpdateFunctions.commonUpdateDeleteChecking(req, res, "deleteexisting");
   }
+});
+
+/*  specific deletion middlewares */
+router.get('/deleteBearingEntry', function (req, res, next) {
+    if(!req.session.loggedin)
+      res.redirect('/updateEntry');
+    else {
+      if(!req.query.index || !req.query.type || !req.query.name || !req.query.type || !req.query.date || !req.query.make || !req.query.comment)
+        res.redirect('/updateEntry/home');
+      else {
+            db.machine.update({ m_no: req.query.name }, { $pull: { bearing: {
+                date : new Date(req.query.date),
+                make : req.query.make,
+                comment : req.query.comment,
+                type : req.query.type
+            } } }, {multi : false , upsert : false}, function(err, numRemoved) {
+                  if(err || numRemoved == 0)
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=m_no&name=${req.query.name}&message=ERROR!%20%3C/strong%3E${((err)?err.message:"Entry%20Not%20Found")}`);
+                  else
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=m_no&name=${req.query.name}&message=SUCCESS!%20%3C/strong%3EDeleted%20Bearing%20Entry%20Successfully`);
+              });
+        }
+      }
+});
+
+router.get('/deleteBackUpRollEntry', function (req, res, next) {
+    if(!req.session.loggedin)
+      res.redirect('/updateEntry');
+    else {
+      if(!req.query.index || !req.query.type || !req.query.name || !req.query.type || !req.query.date || !req.query.dia || !req.query.comment)
+        res.redirect('/updateEntry/home');
+      else {
+            db.machine.update({ m_no: req.query.name }, { $pull: { roll: {
+                date : new Date(req.query.date),
+                dia : req.query.dia,
+                comment : req.query.comment,
+                type : req.query.type
+            } } }, {multi : false , upsert : false}, function(err, numRemoved) {
+                  if(err || numRemoved == 0)
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=m_no&name=${req.query.name}&message=ERROR!%20%3C/strong%3E${((err)?err.message:"Entry%20Not%20Found")}`);
+                  else
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=m_no&name=${req.query.name}&message=SUCCESS!%20%3C/strong%3EDeleted%20Back%20Roll%20Entry%20Successfully`);
+              });
+        }
+      }
+});
+
+router.get('/deleteWorkRollEntry', function (req, res, next) {
+    if(!req.session.loggedin)
+      res.redirect('/updateEntry');
+    else {
+      if(!req.query.index || !req.query.rollname || !req.query.m_no || !req.query.m_up || !req.query.m_down || !req.query.reason || !req.query.g_time || !req.query.dia || !req.query.operator || !req.query.comment)
+        res.redirect('/updateEntry/home');
+      else {
+            db.workroll.update({ roll: req.query.rollname }, { $pull: { field: {
+                m_no : req.query.m_no,
+                m_up : new Date(req.query.m_up),
+                m_down : new Date(req.query.m_down),
+                reason : req.query.reason,
+                g_time : new Date(req.query.g_time),
+                dia : req.query.dia,
+                operator : req.query.operator,
+                comment : req.query.comment
+            } } }, {multi : false , upsert : false}, function(err, numRemoved) {
+                  if(err || numRemoved == 0)
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=roll&name=${req.query.rollname}&message=ERROR!%20%3C/strong%3E${((err)?err.message:"Entry%20Not%20Found")}`);
+                  else
+                      res.redirect(`/updateEntry/deleteExistingEntry?type=roll&name=${req.query.rollname}&message=SUCCESS!%20%3C/strong%3EDeleted%20Work%20Roll%20Entry%20Successfully`);
+              });
+        }
+      }
 });
 
 module.exports = router;
