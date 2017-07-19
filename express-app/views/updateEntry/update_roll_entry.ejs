@@ -7,22 +7,22 @@
       <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
       <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.min.css">
       <link rel="stylesheet" href="/css/common.css">
-      <title>Add Work Roll Entry</title>
+      <title>Update Work Roll Entry</title>
    </head>
    <body style="background-color:lavender;">
       <div id="navigation"></div>
       <br><br>
       <div class="container">
          <div class="page-header">
-            <h1>Enter Details For Work Roll </h1>
+           <title>Update Work Roll Entry</title>
          </div>
          <div class="container">
-            <form class="form-horizontal" method="POST" action="/workrollSection/addWorkRollEntry" id="form">
+            <form class="form-horizontal" method="POST" action="/updateEntry/updateWorkRollEntry" id="form">
 
               <div class="form-group has-success has-feedback">
                  <label class="col-sm-2 control-label" for="roll">Work Roll Name</label>
                  <div class="col-sm-10">
-                    <input class="form-control roll" id="roll" name="roll"  type="text" value="<%= roll %>" form="form" autofocus required>
+                    <input class="form-control roll" id="name" name="name"  type="text" value="<%= name %>" form="form" autofocus required>
                  </div>
               </div>
 
@@ -36,14 +36,14 @@
                <div class="form-group has-error has-feedback">
                   <label class="col-sm-2 control-label" for="m_up">Machine Up Time</label>
                   <div class="col-sm-10">
-                     <input class="form-control" id="m_up" name ="m_up" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" value="<%= m_up %>" form="form" required>
+                     <input class="form-control" id="m_up" name ="m_up" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" form="form" required>
                   </div>
                </div>
 
                <div class="form-group has-success has-feedback">
                   <label class="col-sm-2 control-label" for="m_down">Machine Down Time</label>
                   <div class="col-sm-10">
-                     <input class="form-control" id="m_down" name ="m_down" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" value="<%= m_down %>" form="form" required>
+                     <input class="form-control" id="m_down" name ="m_down" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" form="form" required>
                   </div>
                </div>
 
@@ -57,7 +57,7 @@
                <div class="form-group has-error has-feedback">
                   <label class="col-sm-2 control-label" for="g_time">Grinding Completed Time</label>
                   <div class="col-sm-10">
-                     <input class="form-control" id="g_time" name ="g_time" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" value="<%= g_time %>" form="form" required>
+                     <input class="form-control" id="g_time" name ="g_time" min="2000-01-01T00:01" max="9999-01-01T00:01" type="datetime-local" form="form" required>
                   </div>
                </div>
 
@@ -81,6 +81,9 @@
                      <input class="form-control" id="comment" name="comment" type="text" value="<%= comment %>" form="form" required>
                   </div>
                </div>
+               <input type="hidden" name="index" value="<%= index %>" form="form" required readonly>
+               <input type="hidden" name="oldname" value="<%= name %>" form="form" required readonly>
+
 
                <div class="form-group">
                   <label class="col-sm-2 control-label"></label>
@@ -101,21 +104,32 @@
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
-   <script type="text/javascript" src="/javascript/workrollSection/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
    <script type="text/javascript" src="/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
    <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
    <script>
+   Number.prototype.AddZero= function(b,c){
+    var  l= (String(b|| 10).length - String(this).length)+1;
+    return l> 0? new Array(l).join(c|| '0')+this : this;
+  }
+  function localDateTime(d){
+      temp = [
+         d.getFullYear(), (d.getMonth()+1).AddZero(), d.getDate().AddZero()].join('-') +'T' +
+        [d.getHours().AddZero(),
+         d.getMinutes().AddZero()].join(':');
+      return temp;
+    }
       $(function() {
         dataListForMachineName();
-        dataListForWorkRollName("new");
+        dataListForWorkRollName("both");
         dataListForWorkRollReason();
         dataListForWorkRollOperator();
 
-        $("#add_new_roll_entry").attr("class", "active");
+        document.getElementById("m_up").value = localDateTime(new Date("<%= m_up %>"));
+        document.getElementById("m_down").value = localDateTime(new Date("<%= m_down %>"));
+        document.getElementById("g_time").value = localDateTime(new Date("<%= g_time %>"));
 
-        $("input").focus(function() {
-          $("#message").html("");
-        });
+        $("#update_entry").attr("class", "active");
 
         $("#form").submit(function(e) {
           $("#roll").val($("#roll").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
@@ -135,8 +149,7 @@
             $("#comment").val('-');
 
           checkIfMachineExists($("#m_no").val(), e, false);
-          checkIfWorkRollExists($("#roll").val(), e, false, "new");
-
+          checkIfWorkRollExists($("#roll").val(), e, false);
         });
       });
    </script>

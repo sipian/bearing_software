@@ -132,6 +132,27 @@ router.get('/checkIfMachineExists', function (req, res, next) {
         }
     });
 });
+router.get('/checkIfBackUpRollEntryExists', function (req, res, next) {
+    db.machine.find({
+        $and : [ { m_no: req.query.m_no },
+                {
+                  roll: { $elemMatch: { type : req.query.type, date: new Date(req.query.date) } }
+                }]
+    }).projection({ m_no: 1 }).exec(function (err, docs) {
+        if (err) {
+            console.log("Error happened while /checkIfBackUpRollEntryExists : " + err);
+            res.send("error");
+        } else {
+            if (docs.length > 1) {
+                res.send("multiple");
+            } else if (docs.length === 1) {
+                res.send("exists");
+            } else {
+                res.send("doesNotexist");
+            }
+        }
+    });
+});
 
 /* ************************************ */
 /* WORKROLL'S CHECKING FUNCTIONS */

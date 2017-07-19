@@ -49,6 +49,9 @@ document.getElementById("navigation")
                   </li>
                </ul>
             </li>
+            <li>
+              <a href="#" onclick="printPage()">Print</a>
+            </li>
          </ul>
          <p class="navbar-text" style="color:blue;">Update Entry <span class="glyphicon glyphicon-user"></span></p>
       </div>

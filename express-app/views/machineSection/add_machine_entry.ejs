@@ -81,6 +81,8 @@
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           if(!$("#comment").val())
             $("#comment").val('-');
+          if(!$("#make").val())
+            $("#make").val('-');
           checkIfMachineExists($("#m_no").val(), e, false);
         });
       });

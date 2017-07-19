@@ -21,17 +21,17 @@
                <div class="form-group has-success has-feedback">
                   <label class="col-sm-2 control-label" for="machineName">Machine Name</label>
                   <div class="col-sm-10">
-                     <input class="form-control m_no" id="m_no" name="m_no"  type="text" value="<%= name %>" form="form" autofocus required>
+                     <input class="form-control m_no" id="m_no" name="name"  type="text" value="<%= name %>" form="form" autofocus required>
                   </div>
                </div>
                <div class="form-group has-warning has-feedback">
-                  <label class="col-sm-2 control-label" for="dateOfEntry">Date Of Entry</label>
+                  <label class="col-sm-2 control-label" for="date">Date Of Entry</label>
                   <div class="col-sm-10">
-                     <input class="form-control" id="dateOfEntry" name ="date" min="2000-01-02" max="9999-01-02" type="date" value="<%= date %>" form="form" required>
+                     <input class="form-control" id="date" name ="date" min="2000-01-02" max="9999-01-02" type="date" form="form" required>
                   </div>
                </div>
                <div class="form-group has-error has-feedback">
-                  <label class="col-sm-2 control-label" for="make">Roll Diameter</label>
+                  <label class="col-sm-2 control-label" for="dia">Roll Diameter</label>
                   <div class="col-sm-10">
                      <input class="form-control" id="dia" name="dia" type="text" value="<%= dia %>" form="form" required>
                   </div>
@@ -45,13 +45,15 @@
                <div class="form-group has-info has-feedback">
                   <label class="col-sm-2 control-label" for="comment">Type</label>
                   <div class="col-sm-10">
-                     <select class="form-control" name="type">
-                       <option val="1">Back Up Roll 1</option>
-                       <option val="2">Back Up Roll 2</option>
+                     <select class="form-control" name="type" id="select" form="form">
+                       <option value="1">Back Up Roll 1</option>
+                       <option value="2">Back Up Roll 2</option>
                      </select>
                   </div>
                </div>
-               <input type="hidden" name="type" value="<%= type %>" form="form" required readonly>
+               <input type="hidden" name="index" value="<%= index %>" form="form" required readonly>
+               <input type="hidden" name="oldname" value="<%= name %>" form="form" required readonly>
+
                <div class="form-group">
                   <label class="col-sm-2 control-label"></label>
                   <div class="col-sm-5">
@@ -71,19 +73,23 @@
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
-   <script type="text/javascript" src="/javascript/machineSection/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
    <script type="text/javascript" src="/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
    <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
    <script>
       $(function() {
         dataListForMachineName();
-        $("#add_new_entry").attr("class", "active");
+        $("#update_entry").attr("class", "active");
+        $('#select option[value=<%= type %>]').attr('selected','selected');
+        var old_date = new Date("<%= date %>"),
+            day = ("0" + old_date.getDate()).slice(-2),
+            month = ("0" + (old_date.getMonth() + 1)).slice(-2),
+            today = old_date.getFullYear()+"-"+(month)+"-"+(day);
 
-        $("input").focus(function() {
-          $("#message").html("");
-        });
+        $("#date").val(today);
 
         $("#form").submit(function(e) {
+          $("#message").html("");
           $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#dia").val($("#dia").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
           $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
