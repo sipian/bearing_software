@@ -143,6 +143,11 @@ function dataListForWorkRollOperator() {
 /* CHECKING DATA EXISTENCE FUNCTIONS */
 
 function checkIfMachineExists(inputCheck, e , giveErrorOnExists) {
+    if(!inputCheck){
+      $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Enter Machine Name.</div>`);
+      e.preventDefault();
+      return;
+    }
     $.ajax({
         type: "GET",
         url: "/datalist/checkIfMachineExists",
@@ -176,6 +181,11 @@ function checkIfMachineExists(inputCheck, e , giveErrorOnExists) {
 }
 
 function checkIfWorkRollExists(inputCheck, e , giveErrorOnExists, st = "both") {
+  if(!inputCheck){
+    $("#message").html(`<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a> <strong>ERROR!</strong> Enter Work Roll Name.</div>`);
+    e.preventDefault();
+    return;
+  }
     $.ajax({
         type: "GET",
         url: "/datalist/checkIfWorkRollExists",

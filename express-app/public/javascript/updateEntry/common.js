@@ -17,7 +17,7 @@ document.getElementById("navigation")
                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Update Name<b class="caret"></b></a>
                <ul class="dropdown-menu">
                   <li class="dropdown-submenu">
-                  <li> <a href="/updateEntry/updateName?type=machine">Update Machine's Name</a> </li>
+                  <li> <a href="/updateEntry/updateName?type=m_no">Update Machine's Name</a> </li>
                   <li> <a href="/updateEntry/updateName?type=roll">Update Work Roll's Name</a> </li>
                   </li>
                </ul>
@@ -26,51 +26,26 @@ document.getElementById("navigation")
                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Delete Name<b class="caret"></b></a>
                <ul class="dropdown-menu">
                   <li class="dropdown-submenu">
-                  <li> <a href="/updateEntry/deleteName?type=machine">Delete Machine</a> </li>
+                  <li> <a href="/updateEntry/deleteName?type=m_no">Delete Machine</a> </li>
                   <li> <a href="/updateEntry/deleteName?type=roll">Delete Work Roll</a> </li>
                   </li>
                </ul>
             </li>
-            <li id="delete_entry">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Delete Entered Entry<b class="caret"></b></a>
-               <ul class="dropdown-menu multi-level">
+            <li id="update_entry">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Update Entry<b class="caret"></b></a>
+               <ul class="dropdown-menu">
                   <li class="dropdown-submenu">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Delete Machine Entry<b class="caret"></b></a>
-                     <ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
-                        <li>
-                           <a href="/updateEntry/deleteEntry?type=machine">Delete Bearing Entry</a>
-                        </li>
-                        <li>
-                           <a href="/updateEntry/deleteEntry?type=backroll">Delete Back Up Roll Entry</a>
-                        </li>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="/updateEntry/deleteEntry?type=roll">Delete Work Roll Entry</a>
+                  <li> <a href="/updateEntry/updateExistingEntry?type=m_no">Update Machine's Entry</a> </li>
+                  <li> <a href="/updateEntry/updateExistingEntry?type=roll">Update Work Roll's Entry</a> </li>
                   </li>
                </ul>
             </li>
-
-            <li id="edit_entry">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit Entered Entry<b class="caret"></b></a>
-               <ul class="dropdown-menu multi-level">
+            <li id="delete_entry">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Delete Entry<b class="caret"></b></a>
+               <ul class="dropdown-menu">
                   <li class="dropdown-submenu">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit Machine Entry<b class="caret"></b></a>
-                     <ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
-                        <li>
-                           <a href="/updateEntry/editEntry?type=machine">Edit Bearing Entry</a>
-                        </li>
-                        <li>
-                           <a href="/updateEntry/editEntry?type=backroll">Edit Back Up Roll Entry</a>
-                        </li>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="/updateEntry/editEntry?type=roll">Edit Work Roll Entry</a>
+                  <li> <a href="/updateEntry/deleteExistingEntry?type=m_no">Delete Machine's Entry</a> </li>
+                  <li> <a href="/updateEntry/deleteExistingEntry?type=roll">Delete Work Roll's Entry</a> </li>
                   </li>
                </ul>
             </li>

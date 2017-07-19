@@ -3,9 +3,8 @@ const express = require('express'),
       fs = require('fs'),
       url = require('url'),
       utilityFunctions = require('./functions.js'),
-      router = express.Router();
-
-var db = require('./db.js');
+      router = express.Router(),
+      db = require('./db.js');
 
 router.get('/', function (req, res, next) {
     res.render('workrollSection/index');

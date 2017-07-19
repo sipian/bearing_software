@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -7,23 +8,24 @@
       <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
       <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.min.css">
       <link rel="stylesheet" href="/css/common.css">
-      <title>Update <%- type %>'s Name</title>
+      <title><%= purpose %></title>
    </head>
    <body style="background-color:lavender;">
       <div id="navigation"></div>
       <br><br>
       <div class="container">
          <div class="page-header">
-            <h1>Update <%- type %>'s Name </h1>
+            <h1><%= purpose %></h1>
          </div>
          <div class="container">
-            <form class="form-horizontal" method="POST" action="/workrollSection/addNewWorkRoll" id="form">
+            <form class="form-horizontal" method="POST" action="/updateEntry/<%= (purposeKeyword==='update')?'updateName':(purposeKeyword==='delete')?'deleteName':(purposeKeyword==='updateexisting')?'updateExistingEntry':'deleteExistingEntry'%>" id="form">
                <div class="form-group has-success has-feedback">
-                  <label class="col-sm-2 control-label" for="roll">Work Roll Name</label>
+                  <label class="col-sm-2 control-label" for="name">Enter <%- heading %>'s Name That You Want To Modify: </label>
                   <div class="col-sm-10">
-                     <input class="form-control roll" id="roll" name="roll"  type="text" value="<%= roll %>" form="form" required>
+                     <input class="form-control <%- type %>" id="name" name="name"  type="text" value="<%= name %>" form="form" autofocus required>
                   </div>
                </div>
+               <input type="hidden" name="type" value="<%- type %>" form="form" readonly required>
                <div class="form-group">
                   <label class="col-sm-2 control-label"></label>
                   <div class="col-sm-5">
@@ -33,31 +35,49 @@
                <div class="form-group">
                   <label class="col-sm-2 control-label"></label>
                   <div class="col-sm-8">
-                    <span id="message"><%- message %></span>
+                    <span id="error"><%- error %></span>
                   </div>
                </div>
             </form>
          </div>
       </div>
+      <span id="message"><%- message %></span>
       <div class="container" id="zoomFeatures"></div>
    </body>
    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="/javascript/common.js"></script>
-   <script type="text/javascript" src="/javascript/workrollSection/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
    <script type="text/javascript" src="/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
    <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
    <script>
       $(function() {
-        dataListForWorkRollName("both");
-        $("#add_new_roll").attr("class", "active");
+        if("<%- type %>" === "roll")
+          dataListForWorkRollName("both");
+        else
+          dataListForMachineName();
 
-        $("input").focus(function() {
-          $("#message").html("");
+        if("<%= purposeKeyword %>" === "update")
+          $("#update_name").attr("class", "active");
+        else if("<%= purposeKeyword %>" === "delete")
+          $("#delete_name").attr("class", "active");
+        else if("<%= purposeKeyword %>" === "updateexisting")
+          $("#update_entry").attr("class", "active");
+        else
+          $("#delete_entry").attr("class", "active");
+
+        $("#name").focus(function() {
+          $("#error").html("");
         });
 
         $("#form").submit(function(e) {
-          $("#roll").val($("#roll").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
-          checkIfWorkRollExists($("#roll").val(), e, true);
+          $("#error").html("");
+          $("#message").html("");
+          $("#name").val($("#name").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+
+          if("<%- type %>" === "roll")
+            checkIfWorkRollExists($("#name").val(), e, false);
+          else
+            checkIfMachineExists($("#name").val(), e, false);
         });
       });
    </script>

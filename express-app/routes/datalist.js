@@ -1,7 +1,6 @@
 const express = require('express'),
-      router = express.Router();
-
-var db = require("./db.js");
+      router = express.Router(),
+      db = require("./db.js");
 
 /* ************************************ */
 /* MACHINE'S DATALIST */
