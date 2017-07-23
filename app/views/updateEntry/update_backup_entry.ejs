@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+      <link rel="stylesheet" href="/css/common.css">
+      <title>Update Back Up Roll Entry</title>
+   </head>
+   <body class="updateBG">
+      <div id="navigation"></div>
+      <br><br>
+      <div class="container">
+         <div class="page-header">
+            <h1>Update Back Up Roll Entry</h1>
+         </div>
+         <div class="container">
+            <form class="form-horizontal" method="POST" action="/updateEntry/updateBackUpRollEntry" id="form">
+               <div class="form-group has-success has-feedback">
+                  <label class="col-sm-2 control-label" for="machineName">Machine Name</label>
+                  <div class="col-sm-10">
+                     <input class="form-control m_no" id="m_no" name="name"  type="text" value="<%= name %>" form="form" autofocus >
+                  </div>
+               </div>
+               <div class="form-group has-warning has-feedback">
+                  <label class="col-sm-2 control-label" for="dateOfEntry">Date Of Entry</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="dateOfEntry" name ="date" form="form" >
+                  </div>
+               </div>
+               <div class="form-group has-error has-feedback">
+                  <label class="col-sm-2 control-label" for="dia">Roll Diameter</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="dia" name="dia" type="text" value="<%= dia %>" form="form" >
+                  </div>
+               </div>
+               <div class="form-group has-info has-feedback">
+                  <label class="col-sm-2 control-label" for="comment">Comment</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="comment" name="comment" type="text" value="<%= comment %>" form="form" >
+                  </div>
+               </div>
+               <div class="form-group has-info has-feedback">
+                  <label class="col-sm-2 control-label" for="comment">Type</label>
+                  <div class="col-sm-10">
+                     <select class="form-control" name="type" id="select" form="form">
+                       <option value="1">Back Up Roll Up</option>
+                       <option value="2">Back Up Roll Down</option>
+                     </select>
+                  </div>
+               </div>
+               <input type="hidden" name="index" value="<%= index %>" form="form"  readonly>
+               <input type="hidden" name="oldname" value="<%= name %>" form="form"  readonly>
+
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-5">
+                     <input class="btn btn-warning btn-lg" type="submit" >
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-9">
+                    <span id="message"><%- message %></span>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class="container" id="zoomFeatures"></div>
+   </body>
+   <script type="text/javascript" src="/javascript/jquery.min.js"></script>
+   <script type="text/javascript" src="/javascript/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
+   <script type="text/javascript" src="/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+   <script>
+      $(function() {
+        dataListForMachineName();
+        $("#update_entry").attr("class", "active");
+        $('#select option[value=<%= type %>]').attr('selected','selected');
+        var old_date = new Date("<%= date %>"),
+            day = ("0" + old_date.getDate()).slice(-2),
+            month = ("0" + (old_date.getMonth() + 1)).slice(-2),
+            today = `${day}/${month}/${old_date.getFullYear()}`;
+            
+        $("#dateOfEntry").val(today);
+
+        $("#form").submit(function(e) {
+          $("#message").html("");
+          $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#dia").val($("#dia").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+
+          let dateOfEntry  = $('#dateOfEntry').val().replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+          
+          if(!$("#comment").val())
+            $("#comment").val('-');
+
+          // check for validation
+          if (!$("#m_no").val()) { $(this).find('input#m_no').popover('show'); e.preventDefault(); return; } else $(this).find('input#m_no').popover('hide');
+          if (!dateOfEntry || !isValidDate(dateOfEntry) || new Date(dateOfEntry)<new Date("2000-01-02") || new Date(dateOfEntry)>new Date("9999-01-02")) { 
+            $(this).find('input#dateOfEntry').popover('show'); e.preventDefault(); return; } else $(this).find('input#dateOfEntry').popover('hide');
+          if (!$("#dia").val()) { $(this).find('input#dia').popover('show'); e.preventDefault(); return; } else $(this).find('input#dia').popover('hide');
+          if (!$("#comment").val()) { $(this).find('input#comment').popover('show'); e.preventDefault(); return; } else $(this).find('input#comment').popover('hide');
+
+          checkIfMachineExists($("#m_no").val(), e, false, true);
+        });
+      });
+   </script>
+</html>

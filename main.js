@@ -1,4 +1,5 @@
 const electron = require("electron"),
+      path = require("path"),
       app = electron.app,
       BrowserWindow = electron.BrowserWindow;
 
@@ -8,12 +9,13 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     width: 700,
-    height: 700
+    height: 700,
+    icon: path.join(__dirname, 'app/public/images/logo.png')
   });
   mainWindow.focus();
   mainWindow.maximize();
   mainWindow.loadURL(`file://${__dirname}/index.html`)
-  //mainWindow.webContents.openDevTools();
+ // mainWindow.webContents.openDevTools();
   mainWindow.on("closed", function () {
     mainWindow = null;
   })

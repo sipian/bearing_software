@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+      <link rel="stylesheet" href="/css/jquery-ui-timepicker-addon.css">
+      <link rel="stylesheet" href="/css/common.css">
+      <title>Update Work Roll Entry</title>
+   </head>
+   <body class="updateBG">
+      <div id="navigation"></div>
+      <br><br>
+      <div class="container">
+         <div class="page-header">
+           <title>Update Work Roll Entry</title>
+         </div>
+         <div class="container">
+            <form class="form-horizontal" method="POST" action="/updateEntry/updateWorkRollEntry" id="form">
+
+              <div class="form-group has-success has-feedback">
+                 <label class="col-sm-2 control-label" for="roll">Work Roll Name</label>
+                 <div class="col-sm-10">
+                    <input class="form-control roll" id="roll" name="name"  type="text" value="<%= name %>" form="form" autofocus>
+                 </div>
+              </div>
+
+               <div class="form-group has-warning has-feedback">
+                  <label class="col-sm-2 control-label" for="m_no">Machine Name</label>
+                  <div class="col-sm-10">
+                     <input class="form-control m_no" id="m_no" name="m_no"  type="text" value="<%= m_no %>" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-error has-feedback">
+                  <label class="col-sm-2 control-label" for="m_up">Machine Up Time</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="m_up" name ="m_up" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-success has-feedback">
+                  <label class="col-sm-2 control-label" for="m_down">Machine Down Time</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="m_down" name ="m_down" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-warning has-feedback">
+                  <label class="col-sm-2 control-label" for="reason">Reason</label>
+                  <div class="col-sm-10">
+                     <input class="form-control reason" id="reason" name="reason" type="text" value="<%= reason %>" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-error has-feedback">
+                  <label class="col-sm-2 control-label" for="g_stime">Grinding Starting Time</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="g_stime" name ="g_stime" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-error has-feedback">
+                  <label class="col-sm-2 control-label" for="g_time">Grinding Completed Time</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="g_time" name ="g_time" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-success has-feedback">
+                  <label class="col-sm-2 control-label" for="dia">Diameter</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="dia" name="dia" type="text" value="<%= dia %>" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-warning has-feedback">
+                  <label class="col-sm-2 control-label" for="operator">Grinding Operator</label>
+                  <div class="col-sm-10">
+                     <input class="form-control operator" id="operator" name="operator" type="text" value="<%= operator %>" form="form">
+                  </div>
+               </div>
+
+               <div class="form-group has-error has-feedback">
+                  <label class="col-sm-2 control-label" for="comment">Comment</label>
+                  <div class="col-sm-10">
+                     <input class="form-control" id="comment" name="comment" type="text" value="<%= comment %>" form="form">
+                  </div>
+               </div>
+               <input type="hidden" name="index" value="<%= index %>" form="form" readonly>
+               <input type="hidden" name="oldname" value="<%= name %>" form="form" readonly>
+
+
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-5">
+                     <input class="btn btn-warning btn-lg" type="submit" >
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-9">
+                    <span id="message"><%- message %></span>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class="container" id="zoomFeatures"></div>
+   </body>
+   <script type="text/javascript" src="/javascript/jquery.min.js"></script>
+   <script type="text/javascript" src="/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="/javascript/jquery-ui-timepicker-addon.js"></script>
+   <script type="text/javascript" src="/javascript/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
+   <script>
+   Number.prototype.AddZero= function(b,c){
+    var  l= (String(b|| 10).length - String(this).length)+1;
+    return l> 0? new Array(l).join(c|| '0')+this : this;
+  }
+  function localDateTime(d){
+        var temp = [ d.getDate().AddZero(), (d.getMonth()+1).AddZero(), d.getFullYear() ].join('/')
+
+        var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours < 10 ? '0'+hours : hours;
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+
+      return temp+' '+strTime;
+    }
+      $(function() {
+        dataListForMachineName();
+        dataListForWorkRollName("both");
+        dataListForWorkRollReason();
+        dataListForWorkRollOperator();
+
+        document.getElementById("m_up").value = localDateTime(new Date("<%= m_up %>"));
+        document.getElementById("m_down").value = localDateTime(new Date("<%= m_down %>"));
+        document.getElementById("g_stime").value = localDateTime(new Date("<%= g_stime %>"));
+        document.getElementById("g_time").value = localDateTime(new Date("<%= g_time %>"));
+
+        $("#update_entry").attr("class", "active");
+
+        $("#form").submit(function(e) {
+          let m_up  = $('#m_up').val().replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+          let m_down  = $('#m_down').val().replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+          let g_stime  = $('#g_stime').val().replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+          let g_time  = $('#g_time').val().replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+
+          $("#roll").val($("#roll").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#m_no").val($("#m_no").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#reason").val($("#reason").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#dia").val($("#dia").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#operator").val($("#operator").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+          $("#comment").val($("#comment").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+
+          if(!$("#reason").val())
+            $("#reason").val('-');
+          if(!$("#comment").val())
+            $("#comment").val('-');
+
+             // check for validation
+          if (!$("#roll").val()) { $(this).find('input#roll').popover('show'); e.preventDefault(); return; } else $(this).find('input#roll').popover('hide');
+          if (!$("#m_no").val()) { $(this).find('input#m_no').popover('show'); e.preventDefault(); return; } else $(this).find('input#m_no').popover('hide');
+
+          if (!m_up || !isValidDate(m_up) || new Date(m_up)<new Date("2000-01-02") || new Date(m_up)>new Date("9999-01-01")) { $(this).find('input#m_up').popover('show'); e.preventDefault(); return; } else $(this).find('input#m_up').popover('hide');
+
+          if (!m_down || !isValidDate(m_down) || new Date(m_down)<new Date("2000-01-02") || new Date(m_down)>new Date("9999-01-01") || new Date(m_down) <= new Date(m_up)) { $(this).find('input#m_down').popover('show'); e.preventDefault(); return; } else $(this).find('input#m_down').popover('hide');
+          
+          if (!$("#reason").val()) { $(this).find('input#reason').popover('show'); e.preventDefault(); return; } else $(this).find('input#reason').popover('hide');
+
+          if (!g_stime || !isValidDate(g_stime) || new Date(g_stime)<new Date("2000-01-02") || new Date(g_stime)>new Date("9999-01-01") || new Date(g_stime) <= new Date(m_down)) { $(this).find('input#g_stime').popover('show'); e.preventDefault(); return; } else $(this).find('input#g_stime').popover('hide');
+
+          if (!g_time || !isValidDate(g_time) || new Date(g_time)<new Date("2000-01-02") || new Date(g_time)>new Date("9999-01-01") || new Date(g_time) <= new Date(g_stime)) { $(this).find('input#g_time').popover('show'); e.preventDefault(); return; } else $(this).find('input#g_time').popover('hide');
+
+          if (!$("#dia").val()) { $(this).find('input#dia').popover('show'); e.preventDefault(); return; } else $(this).find('input#dia').popover('hide');
+          if (!$("#operator").val()) { $(this).find('input#operator').popover('show'); e.preventDefault(); return; } else $(this).find('input#operator').popover('hide');
+          if (!$("#comment").val()) { $(this).find('input#comment').popover('show'); e.preventDefault(); return; } else $(this).find('input#comment').popover('hide');
+
+          checkIfMachineExists($("#m_no").val(), e, false);
+          checkIfWorkRollExists($("#roll").val(), e, false, true);
+        });
+      });
+   </script>
+</html>

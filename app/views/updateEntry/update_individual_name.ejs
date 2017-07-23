@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+      <link rel="stylesheet" href="/css/common.css">
+      <title>Enter <%- heading %>'s New Name</title>
+   </head>
+   <body class="updateBG">
+      <div id="navigation"></div>
+      <br><br>
+      <div class="container">
+         <div class="page-header">
+            <h1>Enter <%- heading %>'s New Name </h1>
+         </div>
+         <div class="container">
+            <form class="form-horizontal" method="POST" action="/updateEntry/updateIndividualName" id="form">
+               <div class="form-group has-danger has-feedback">
+                  <label class="col-sm-2 control-label" for="name">Enter <%- heading %>'s New Name</label>
+                  <div class="col-sm-10">
+                     <input class="form-control <%- type %>" id="name" name="newname"  type="text" form="form" autofocus>
+                  </div>
+               </div>
+               <input type="hidden" name="oldname" value="<%- name %>" form="form" readonly required>
+               <input type="hidden" name="type" value="<%- type %>" form="form" readonly required>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-5">
+                     <input class="btn btn-warning btn-lg" type="submit" >
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-8">
+                    <span id="message"><%- error %></span>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class="container" id="zoomFeatures"></div>
+   </body>
+   <script type="text/javascript" src="/javascript/jquery.min.js"></script>
+   <script type="text/javascript" src="/javascript/common.js"></script>
+   <script type="text/javascript" src="/javascript/updateEntry/common.js"></script>
+   <script type="text/javascript" src="/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+   <script>
+      $(function() {
+        if("<%- type %>" === "roll")
+          dataListForWorkRollName("both");
+        else
+          dataListForMachineName();
+
+        $("#update_name").attr("class", "active");
+
+        $("#name").focus(function() {
+          $("#message").html("");
+        });
+
+        $("#form").submit(function(e) {
+          $("#message").html("");
+          $("#name").val($("#name").val().toLowerCase().trim().replace(/\s\s+/g, ' '));
+
+          if (!$("#name").val()) { $(this).find('input#name').popover('show'); e.preventDefault(); return; } else $(this).find('input#name').popover('hide');
+
+          if("<%- type %>" === "roll")
+            checkIfWorkRollExists($("#name").val(), e, true, true);
+          else
+            checkIfMachineExists($("#name").val(), e, true, true);
+        });
+      });
+   </script>
+</html>

@@ -1,7 +1,7 @@
 {
-  "name": "store",
-  "description": "Store software for BSIL",
-  "version": "0.1.0",
+  "name": "Bearing",
+  "description": "Bearing and roll software for BSIL",
+  "version": "1.0.0",
   "main": "main.js",
   "authors": [
     "Harsh Agarwal <harshaga97@gmail.com>"
@@ -9,10 +9,11 @@
   "license": "GPL-3.0",
   "private": true,
   "scripts": {
+ 	"package": "electron-packager . --overwrite --platform=win32 --arch=ia32 --app-version=1.0.0 --icon=app/public/images/logo.png --prune=true --out=release-builds32bit --version-string.CompanyName=\"Harsh Agarwal\" --version-string.FileDescription=\"Bearing and roll software for BSIL\" --version-string.ProductName=\"Bearing\"",
     "start": ".\\node.exe start-electron.js"
   },
   "dependencies": {
-    "electron": "^1.4.13",
+    "electron": "^1.7.4",
     "jquery": "^3.1.1",
     "keymaster": "^1.6.2",
     "lodash": "^4.17.3",
