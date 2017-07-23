@@ -5,7 +5,7 @@ Some features of this project
 
 * [Express](https://www.npmjs.com/package/express) web framework is used 
 * [NeDB](https://github.com/louischatriot/nedb) is used for a NoSQL database
-* Internet connection is not needed for this app to run.<br> It is made keeping in mind a complete offline environment
+* Internet connection is not needed for this app to run. It is made keeping in mind a complete offline environment.
 
 This app is tested for Microsoft Windows.
 
