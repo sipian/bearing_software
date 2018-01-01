@@ -1,13 +1,14 @@
 # BSIL Bearing & Roll Software
 BSIL Bearing & Roll Software is an  [electron](https://electron.atom.io/) app built in [nodeJS](https://nodejs.org/en/)
+This app is made keeping in mind a complete offline environment. Internet connection is not needed for this app to run. 
 
-Some features of this project
+## Languages/Frameworks used
+* [Express](https://www.npmjs.com/package/express) 
+* [NeDB](https://github.com/louischatriot/nedb) is used as a NoSQL database
+* 
 
-* [Express](https://www.npmjs.com/package/express) web framework is used 
-* [NeDB](https://github.com/louischatriot/nedb) is used for a NoSQL database
-* Internet connection is not needed for this app to run. It is made keeping in mind a complete offline environment.
-
-This app is tested for Microsoft Windows.
+## Prerequests
+This app has been tested on a Windows Platform.
 
 To run in Windows along with the node_modules  , two nodeJS binary files are also needed.
 
@@ -21,3 +22,11 @@ For 64-bit Windows
 Here is a screenshot of the final file layout:
 
 ![File-Layout](https://github.com/sipian/gitstore/blob/master/screenshots/Main%20Page.png)
+
+
+## How to start it
+After cloning the repository , execute the following commands in the nodeJS terminal
+```
+npm install
+npm start
+```
