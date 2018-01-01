@@ -1,5 +1,5 @@
-# BSIL Bearing & Roll Software
-BSIL Bearing & Roll Software is an  [electron](https://electron.atom.io/) app built in [nodeJS](https://nodejs.org/en/)
+# Bearing & Roll Electron App
+Bearing & Roll Software is an  [electron](https://electron.atom.io/) app built in [nodeJS](https://nodejs.org/en/)
 This app is made keeping in mind a complete offline environment. Internet connection is not needed for this app to run. 
 
 ## Languages/Frameworks used
