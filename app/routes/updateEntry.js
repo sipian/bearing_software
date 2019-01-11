@@ -568,7 +568,7 @@ router.get('/updateWorkRollEntry', function (req, res, next) {
       res.redirect('/updateEntry');
     else {
       if(!req.query.index || !req.query.name || !req.query.m_no || !req.query.m_down || !req.query.reason ||
-         !req.query.g_stime  || !req.query.g_time || !req.query.dia || !req.query.operator || !req.query.comment)
+         !req.query.g_time || !req.query.dia || !req.query.operator || !req.query.comment)
         res.redirect('/updateEntry/home');
       else {
         res.render('updateEntry/update_roll_entry', {
@@ -578,7 +578,6 @@ router.get('/updateWorkRollEntry', function (req, res, next) {
               m_up : req.query.m_up,
               m_down : req.query.m_down,
               reason : req.query.reason,
-              g_stime : req.query.g_stime,
               g_time : req.query.g_time,
               dia : req.query.dia,
               operator: req.query.operator,
@@ -593,7 +592,7 @@ router.post('/updateWorkRollEntry', function (req, res, next) {
   if(!req.session.loggedin)
       res.redirect('/updateEntry');
   else if(!req.body.index || !req.body.name || !req.body.m_no ||  !req.body.m_up || !req.body.m_down || !req.body.reason || 
-          !req.body.g_stime || !req.body.g_time ||  !req.body.dia || !req.body.operator || !req.body.comment ||  !req.body.oldname )
+          !req.body.g_time ||  !req.body.dia || !req.body.operator || !req.body.comment ||  !req.body.oldname )
     res.redirect('/updateEntry/home');
   else {
     var doc_response = {
@@ -603,7 +602,6 @@ router.post('/updateWorkRollEntry', function (req, res, next) {
         m_up : req.body.m_up,
         m_down : req.body.m_down,
         reason : req.body.reason,
-        g_stime : req.body.g_stime,
         g_time : req.body.g_time,
         dia : req.body.dia,
         operator: req.body.operator,
@@ -619,7 +617,6 @@ router.post('/updateWorkRollEntry', function (req, res, next) {
       // changing date from dd/mm/yy to mm/dd/yy format
       req.body.m_up = req.body.m_up.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
       req.body.m_down = req.body.m_down.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
-      req.body.g_stime = req.body.g_stime.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
       req.body.g_time = req.body.g_time.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
 
       db.workroll.find (findJSON).projection({field : 1, roll: 1}).exec(function(err, docs) {
@@ -634,7 +631,6 @@ router.post('/updateWorkRollEntry', function (req, res, next) {
               docs[0].field[req.body.index].m_up = new Date(req.body.m_up);
               docs[0].field[req.body.index].m_down = new Date(req.body.m_down);
               docs[0].field[req.body.index].reason = req.body.reason;
-              docs[0].field[req.body.index].g_stime = new Date(req.body.g_stime);
               docs[0].field[req.body.index].g_time = new Date(req.body.g_time);
               docs[0].field[req.body.index].dia = req.body.dia;
               docs[0].field[req.body.index].operator = req.body.operator;
@@ -666,7 +662,6 @@ router.post('/updateWorkRollEntry', function (req, res, next) {
                   m_up : new Date(req.body.m_up),
                   m_down : new Date(req.body.m_down),
                   reason : req.body.reason,
-                  g_stime : new Date(req.body.g_stime),
                   g_time : new Date(req.body.g_time),
                   dia : req.body.dia,
                   operator: req.body.operator,
@@ -791,7 +786,7 @@ router.get('/deleteWorkRollEntry', function (req, res, next) {
     if(!req.session.loggedin)
       res.redirect('/updateEntry');
     else {
-      if(!req.query.index || !req.query.name || !req.query.m_no || !req.query.m_up || !req.query.m_down || !req.query.reason || !req.query.g_stime || !req.query.g_time || !req.query.dia || !req.query.operator || !req.query.comment)
+      if(!req.query.index || !req.query.name || !req.query.m_no || !req.query.m_up || !req.query.m_down || !req.query.reason || !req.query.g_time || !req.query.dia || !req.query.operator || !req.query.comment)
         res.redirect('/updateEntry/home');
       else {
             db.workroll.update({ roll: req.query.name }, { $pull: { field: {
@@ -799,7 +794,6 @@ router.get('/deleteWorkRollEntry', function (req, res, next) {
                 m_up : new Date(req.query.m_up),
                 m_down : new Date(req.query.m_down),
                 reason : req.query.reason,
-                g_stime : new Date(req.query.g_stime),
                 g_time : new Date(req.query.g_time),
                 dia : req.query.dia,
                 operator : req.query.operator,

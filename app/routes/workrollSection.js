@@ -35,7 +35,7 @@ router.post('/addNewWorkRoll', function (req, res, next) {
         } else {
           res.render('workrollSection/add_new_work_roll', {
             roll: req.body.roll,
-            message: `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Added Entry Sucessfully</div>`,
+            message: `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Added Entry Successfully</div>`,
           });
         }
     });
@@ -50,7 +50,6 @@ router.get('/addWorkRollEntry', function (req, res, next) {
           m_up: '',
           m_down: '',
           reason: '',
-          g_stime: '',
           g_time: '',
           dia: '',
           operator: '',
@@ -62,7 +61,7 @@ router.get('/addWorkRollEntry', function (req, res, next) {
 router.post('/addWorkRollEntry', function(req, res, next) {
   console.log(req.body);
   if(!req.body.roll || !req.body.m_no || !req.body.m_up || !req.body.m_down || !req.body.reason ||
-     !req.body.g_stime  || !req.body.g_time || !req.body.dia || !req.body.operator)
+     !req.body.g_time || !req.body.dia || !req.body.operator)
       res.redirect('/workrollSection');
   else {
         doc_response = {
@@ -71,7 +70,6 @@ router.post('/addWorkRollEntry', function(req, res, next) {
           m_up: req.body.m_up,
           m_down: req.body.m_down,
           reason: req.body.reason,
-          g_stime: req.body.g_stime,
           g_time: req.body.g_time,
           dia: req.body.dia,
           operator: req.body.operator,
@@ -81,7 +79,6 @@ router.post('/addWorkRollEntry', function(req, res, next) {
       // changing date from dd/mm/yy to mm/dd/yy format
       req.body.m_up = req.body.m_up.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
       req.body.m_down = req.body.m_down.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
-      req.body.g_stime = req.body.g_stime.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
       req.body.g_time = req.body.g_time.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
 
       db.workroll.find ({
@@ -107,7 +104,6 @@ router.post('/addWorkRollEntry', function(req, res, next) {
                       m_up: new Date(req.body.m_up),
                       m_down: new Date(req.body.m_down),
                       reason: req.body.reason,
-                      g_stime: new Date(req.body.g_stime),
                       g_time: new Date(req.body.g_time),
                       dia: req.body.dia,
                       operator: req.body.operator,
@@ -122,7 +118,7 @@ router.post('/addWorkRollEntry', function(req, res, next) {
                           doc_response.message = `<div class="alert alert-danger alert-dismissable fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>ERROR! </strong>${(err)?(err.message):('Either The Work Roll Is Old Or It Does Not Exist')}</div>`;
                           res.render('workrollSection/add_workroll_entry', doc_response);
                       } else {
-                          doc_response.message = `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Added Entry Sucessfully</div>`;
+                          doc_response.message = `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Added Entry Successfully</div>`;
                           res.render('workrollSection/add_workroll_entry', doc_response);
                         }
                   });
@@ -166,7 +162,7 @@ router.post('/changeRollStatus', function (req, res, next) {
                     res.render('workrollSection/change_work_roll_status', {
                         roll : req.body.roll,
                         status: req.body.status,
-                        message : `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Modified Entry Sucessfully</div>`
+                        message : `<div class="alert alert-dismissable alert-success fade in"><a aria-label=close class=close data-dismiss=alert href=#>×</a><strong>SUCCESS!</strong> Modified Entry Successfully</div>`
                     });
                   }
             });
@@ -223,6 +219,10 @@ router.post('/viewWorkRoll', function(req, res, next) {
       doc_response.error = "";
       doc_response.message = "";
 
+      // changing date from dd/mm/yy to mm/dd/yy format
+      req.body.startingDate = req.body.startingDate.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+      req.body.endingDate = req.body.endingDate.replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+      
       req.body.startingDate = (new Date(req.body.startingDate));
       req.body.endingDate = (new Date(req.body.endingDate));
 

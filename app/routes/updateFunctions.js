@@ -2,6 +2,13 @@ const utilityFunctions = require('./functions.js'),
       db = require('./db.js');
 
 module.exports = {
+    /*
+        purpose values:
+            update
+            delete
+            updateexisting
+            deleteexisting
+     */
  commonUpdateDeleteChecking: function(req, res, purpose) {
     var doc_response = {
           heading : (req.body.type === "roll")?"Work Roll" : "Machine",
@@ -38,7 +45,7 @@ module.exports = {
                     htmlTosend += (purpose==="update"||purpose==="delete")?`<br><br>
                     <p style="text-align:center;">
                       <a name="${(purpose==="update")?"updateNameAnchorClickSelector":"deleteNameAnchorClickSelector"}" href="/updateEntry/${(purpose==="update")?"updateIndividualName":"deleteIndividualName"}?name=${encodeURIComponent(req.body.name)}&type=${encodeURIComponent(req.body.type)}" class="btn btn-white btn-info">
-                        <span class="glyphicon glyphicon-pencil"></span> ${(purpose==="update")?"Update":"Delete"} Work Roll's Name
+                        <span class="glyphicon glyphicon-pencil"></span> ${(purpose==="update")?"Update":"Delete"} Machine's Name
                       </a>
                     </p>
                     <br><br><br><br>`:`<br><br><br><br><br><br>`;

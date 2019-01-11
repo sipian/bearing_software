@@ -1,15 +1,17 @@
 const express = require('express'),
-      router = express.Router(),
-      db = require("./db.js");
+    router = express.Router(),
+    db = require("./db.js");
 
 /* ************************************ */
 /* MACHINE'S DATALIST */
 
 // get autocomplete array containing all the machine names
-router.get('/machine_no', function(req, res, next) {
+router.get('/machine_no', function (req, res, next) {
     db.machine.find({
 
-    }).projection({ m_no: 1 }).exec(function(err, docs) {
+    }).projection({
+        m_no: 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Datalist For machine_no Error " + err);
             res.send("error");
@@ -26,10 +28,12 @@ router.get('/machine_no', function(req, res, next) {
 });
 
 // get autocomplete array containing all the machine make
-router.get('/make', function(req, res, next) {
+router.get('/make', function (req, res, next) {
     db.machine.find({
 
-    }).projection({ "bearing.make": 1 }).exec(function(err, docs) {
+    }).projection({
+        "bearing.make": 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Datalist For make Error " + err);
             res.send("error");
@@ -45,16 +49,41 @@ router.get('/make', function(req, res, next) {
     });
 });
 
+// get autocomplete array containing all the machine make
+router.get('/grindingWhom', function (req, res, next) {
+    db.machine.find({
+
+    }).projection({
+        "jobWork.whom": 1
+    }).exec(function (err, docs) {
+        if (err) {
+            console.log("Datalist For jobWork whom Error " + err);
+            res.send("error");
+        } else {
+            var datalistData = [],
+                len = docs.length;
+
+            for (var i = 0; i < len; ++i) {
+                if ("jobWork" in docs[i]) {
+                    datalistData.push(docs[i].jobWork.whom);
+                }
+            }
+            res.send(datalistData);
+        }
+    });
+});
 
 /* ************************************ */
 /* WORK ROLL'S DATALIST */
 
 // get autocomplete array containing all the new workroll names
-router.get('/roll', function(req, res, next) {
+router.get('/roll', function (req, res, next) {
     var jsonFind = {};
-    if(req.query.status !== "both")
-      jsonFind.status = req.query.status;
-    db.workroll.find(jsonFind).projection({ roll: 1 }).exec(function(err, docs) {
+    if (req.query.status !== "both")
+        jsonFind.status = req.query.status;
+    db.workroll.find(jsonFind).projection({
+        roll: 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Datalist For roll Error " + err);
             res.send("error");
@@ -71,10 +100,12 @@ router.get('/roll', function(req, res, next) {
 });
 
 // get autocomplete array containing all the workrolls reason
-router.get('/reason', function(req, res, next) {
+router.get('/reason', function (req, res, next) {
     db.workroll.find({
 
-    }).projection({ "field.reason": 1 }).exec(function(err, docs) {
+    }).projection({
+        "field.reason": 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Datalist For reason Error " + err);
             res.send("error");
@@ -91,10 +122,12 @@ router.get('/reason', function(req, res, next) {
 });
 
 // get autocomplete array containing all the workrolls operator names
-router.get('/operator', function(req, res, next) {
+router.get('/operator', function (req, res, next) {
     db.workroll.find({
 
-    }).projection({ "field.operator": 1 }).exec(function(err, docs) {
+    }).projection({
+        "field.operator": 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Datalist For operator Error " + err);
             res.send("error");
@@ -117,7 +150,9 @@ router.get('/operator', function(req, res, next) {
 router.get('/checkIfMachineExists', function (req, res, next) {
     db.machine.find({
         m_no: req.query.data
-    }).projection({ m_no: 1 }).exec(function (err, docs) {
+    }).projection({
+        m_no: 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Error happened while /checkIfMachineExists : " + err);
             res.send("error");
@@ -134,11 +169,21 @@ router.get('/checkIfMachineExists', function (req, res, next) {
 });
 router.get('/checkIfBackUpRollEntryExists', function (req, res, next) {
     db.machine.find({
-        $and : [ { m_no: req.query.m_no },
-                {
-                  roll: { $elemMatch: { type : req.query.type, date: new Date(req.query.date) } }
-                }]
-    }).projection({ m_no: 1 }).exec(function (err, docs) {
+        $and: [{
+                m_no: req.query.m_no
+            },
+            {
+                roll: {
+                    $elemMatch: {
+                        type: req.query.type,
+                        date: new Date(req.query.date)
+                    }
+                }
+            }
+        ]
+    }).projection({
+        m_no: 1
+    }).exec(function (err, docs) {
         if (err) {
             console.log("Error happened while /checkIfBackUpRollEntryExists : " + err);
             res.send("error");
@@ -159,25 +204,27 @@ router.get('/checkIfBackUpRollEntryExists', function (req, res, next) {
 
 // check if a work roll with a name exists
 router.get('/checkIfWorkRollExists', function (req, res, next) {
-  db.workroll.find({
-    roll: req.query.data
-  }).projection({ status: 1 }).exec(function (err, docs) {
-      if (err) {
-          console.log("Error happened while /checkIfWorkRollExists : " + err);
-          res.send("error");
-      } else {
-          if (docs.length > 1) {
-              res.send("multiple");
-          } else if (docs.length === 1) {
-                if(docs[0].status === "new")
+    db.workroll.find({
+        roll: req.query.data
+    }).projection({
+        status: 1
+    }).exec(function (err, docs) {
+        if (err) {
+            console.log("Error happened while /checkIfWorkRollExists : " + err);
+            res.send("error");
+        } else {
+            if (docs.length > 1) {
+                res.send("multiple");
+            } else if (docs.length === 1) {
+                if (docs[0].status === "new")
                     res.send("exists");
                 else
                     res.send("old");
-          } else {
-              res.send("doesNotexist");
-          }
-      }
-  });
+            } else {
+                res.send("doesNotexist");
+            }
+        }
+    });
 });
 
 module.exports = router;
